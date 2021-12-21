@@ -13,13 +13,18 @@
                      260
                      263])
 
+(defn number-of-increases
+  [numbers]
+  (->> numbers
+       (partition 2 1)
+       (filter (fn [[x y]] (> y x)))
+       count))
+
 (defn part-1
   []
   (->> (str/split-lines (slurp (io/file (io/resource "day_01_part_01.txt"))))
        (map #(Integer/parseInt %))
-       (partition 2 1)
-       (filter (fn [[x y]] (> y x)))
-       count))
+       number-of-increases))
 
 (defn part-2
   []
@@ -27,9 +32,7 @@
        (map #(Integer/parseInt %))
        (partition 3 1)
        (map (partial reduce +))
-       (partition 2 1)
-       (filter (fn [[x y]] (> y x)))
-       count))
+       number-of-increases))
 
 (comment
   (->> (str/split-lines (slurp (io/file (io/resource "day_01_part_01.txt"))))
